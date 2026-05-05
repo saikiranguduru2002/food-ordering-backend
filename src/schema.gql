@@ -1,0 +1,135 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AddPaymentMethodInput {
+  brand: String!
+  country: Country!
+  label: String!
+  last4: String!
+  userId: ID!
+}
+
+input AddToCartInput {
+  menuItemId: ID!
+  quantity: Int!
+}
+
+type AuthPayload {
+  accessToken: String!
+  user: UserGql!
+}
+
+type CartGql {
+  id: ID!
+  items: [CartItemGql!]!
+  userId: ID!
+}
+
+type CartItemGql {
+  cartId: ID!
+  id: ID!
+  menuItem: MenuItemGql!
+  menuItemId: ID!
+  quantity: Int!
+}
+
+enum Country {
+  INDIA
+  USA
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type MenuItemGql {
+  id: ID!
+  name: String!
+  price: Float!
+  restaurantId: ID!
+}
+
+type Mutation {
+  addPaymentMethod(input: AddPaymentMethodInput!): PaymentMethodGql!
+  addToCart(input: AddToCartInput!): CartGql!
+  cancelOrder(orderId: ID!): OrderGql!
+  checkout(orderId: ID!, paymentMethodId: ID): OrderGql!
+  createOrder: OrderGql!
+  login(input: LoginInput!): AuthPayload!
+  removeFromCart(input: RemoveFromCartInput!): CartGql!
+}
+
+type OrderGql {
+  country: Country!
+  id: ID!
+  lines: [OrderLineGql!]!
+  status: OrderStatus!
+  totalAmount: Float!
+  userId: ID!
+}
+
+type OrderLineGql {
+  id: ID!
+  menuItemId: ID!
+  orderId: ID!
+  quantity: Int!
+  unitPrice: Float!
+}
+
+enum OrderStatus {
+  CANCELLED
+  CREATED
+  PAID
+}
+
+input PaginationArgs {
+  skip: Int! = 0
+  take: Int! = 20
+}
+
+type PaymentMethodGql {
+  brand: String!
+  country: Country!
+  id: ID!
+  label: String!
+  last4: String!
+  userId: ID!
+}
+
+type Query {
+  menuItems(restaurantId: ID!): [MenuItemGql!]!
+  myCart: CartGql!
+  myOrders: [OrderGql!]!
+  restaurants(pagination: PaginationArgs): RestaurantsPage!
+}
+
+input RemoveFromCartInput {
+  menuItemId: ID!
+}
+
+type RestaurantGql {
+  country: Country!
+  id: ID!
+  name: String!
+}
+
+type RestaurantsPage {
+  items: [RestaurantGql!]!
+  totalCount: Int!
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  MEMBER
+}
+
+type UserGql {
+  country: Country!
+  email: String!
+  id: ID!
+  name: String!
+  role: Role!
+}

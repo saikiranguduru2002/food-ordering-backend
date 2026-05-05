@@ -1,0 +1,127 @@
+# Login (public)
+mutation Login {
+  login(
+    input: { email: "carol.danvers@shield.gov", password: "Password123!" }
+  ) {
+    accessToken
+    user {
+      id
+      name
+      email
+      role
+      country
+    }
+  }
+}
+
+# Use HTTP header: Authorization: Bearer <accessToken>
+
+query Restaurants {
+  restaurants(pagination: { skip: 0, take: 20 }) {
+    totalCount
+    items {
+      id
+      name
+      country
+    }
+  }
+}
+
+query Menu($restaurantId: ID!) {
+  menuItems(restaurantId: $restaurantId) {
+    id
+    name
+    price
+    restaurantId
+  }
+}
+
+query MyCart {
+  myCart {
+    id
+    items {
+      quantity
+      menuItem {
+        id
+        name
+        price
+      }
+    }
+  }
+}
+
+mutation AddToCart($menuItemId: ID!) {
+  addToCart(input: { menuItemId: $menuItemId, quantity: 2 }) {
+    id
+    items {
+      quantity
+      menuItemId
+    }
+  }
+}
+
+mutation RemoveFromCart($menuItemId: ID!) {
+  removeFromCart(input: { menuItemId: $menuItemId }) {
+    id
+    items {
+      menuItemId
+    }
+  }
+}
+
+mutation CreateOrder {
+  createOrder {
+    id
+    status
+    country
+    totalAmount
+    lines {
+      menuItemId
+      quantity
+      unitPrice
+    }
+  }
+}
+
+mutation Checkout($orderId: ID!, $paymentMethodId: ID) {
+  checkout(orderId: $orderId, paymentMethodId: $paymentMethodId) {
+    id
+    status
+  }
+}
+
+mutation CancelOrder($orderId: ID!) {
+  cancelOrder(orderId: $orderId) {
+    id
+    status
+  }
+}
+
+query MyOrders {
+  myOrders {
+    id
+    status
+    country
+    totalAmount
+    lines {
+      quantity
+      unitPrice
+    }
+  }
+}
+
+mutation AddPaymentMethod {
+  addPaymentMethod(
+    input: {
+      userId: "REPLACE_WITH_TARGET_USER_UUID"
+      label: "Work card"
+      last4: "4242"
+      brand: "VISA"
+      country: INDIA
+    }
+  ) {
+    id
+    userId
+    country
+  }
+}

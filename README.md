@@ -4,6 +4,14 @@ Production-oriented NestJS backend for a role-based food ordering system using *
 
 ---
 
+## 🔥 Highlights
+
+- RBAC enforced via NestJS Guards
+- ReBAC (country-based access control)
+- Transaction-safe order processing
+- Strict order lifecycle enforcement
+- Ownership validation for all mutations
+
 ## System at a glance
 
 - **RBAC**: route-level gates via **`@Roles`** + global **`RolesGuard`**
