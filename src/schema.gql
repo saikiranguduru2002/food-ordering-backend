@@ -57,8 +57,10 @@ type Mutation {
   cancelOrder(orderId: ID!): OrderGql!
   checkout(orderId: ID!, paymentMethodId: ID): OrderGql!
   createOrder: OrderGql!
+  deletePaymentMethod(id: ID!): Boolean!
   login(input: LoginInput!): AuthPayload!
   removeFromCart(input: RemoveFromCartInput!): CartGql!
+  updatePaymentMethod(input: UpdatePaymentMethodInput!): PaymentMethodGql!
 }
 
 type OrderGql {
@@ -124,6 +126,13 @@ enum Role {
   ADMIN
   MANAGER
   MEMBER
+}
+
+input UpdatePaymentMethodInput {
+  brand: String
+  id: ID!
+  label: String
+  last4: String
 }
 
 type UserGql {
