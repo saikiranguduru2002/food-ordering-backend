@@ -125,3 +125,25 @@ mutation AddPaymentMethod {
     country
   }
 }
+
+mutation UpdatePaymentMethod {
+  updatePaymentMethod(
+    input: {
+      id: "REPLACE_WITH_PAYMENT_METHOD_ID"
+      label: "Updated label"
+      brand: "MASTERCARD"
+      last4: "1111"
+    }
+  ) {
+    id
+    userId
+    label
+    brand
+    last4
+    country
+  }
+}
+
+mutation DeletePaymentMethod {
+  deletePaymentMethod(id: "REPLACE_WITH_PAYMENT_METHOD_ID")
+}

@@ -67,6 +67,12 @@ Use **`docs/examples.graphql`** and **`POST /graphql`** (Postman: JSON body + `C
    npm install
    ```
 
+   Generate Prisma Client (ensures enum/type exports are available):
+
+   ```bash
+   npm run prisma:generate
+   ```
+
 2. **Configure environment**
 
    ```bash
@@ -102,6 +108,17 @@ Use **`docs/examples.graphql`** and **`POST /graphql`** (Postman: JSON body + `C
    ```
 
    GraphQL Playground / Apollo Sandbox is served at `http://localhost:3000/graphql` (depending on your Nest/Apollo version; introspection is enabled in development builds).
+
+## Quick Test Flow
+
+1. **Login** (`login`) and copy `accessToken`
+2. **Restaurants** (`restaurants`) to observe **ReBAC** (country scoping)
+3. **Menu** (`menuItems`) for a restaurant in-scope
+4. **Cart** (`addToCart`, `myCart`, `removeFromCart`)
+5. **Order** (`createOrder`)
+6. **Checkout** (`checkout`) — **MANAGER/ADMIN only**
+
+Example operations are available in `docs/examples.graphql`.
 
 ## Seeded users
 
@@ -176,6 +193,8 @@ food-ordering-backend/
 - Examples:
   - `checkout` / `cancelOrder`: `ADMIN`, `MANAGER` only.
   - `addPaymentMethod`: `ADMIN` only.
+  - `updatePaymentMethod`: `ADMIN` only.
+  - `deletePaymentMethod`: `ADMIN` only.
   - `createOrder`, cart mutations, catalog queries: any authenticated role subject to **ReBAC** rules in services.
 
 JWT payload includes `role` and `country` so the API can enforce role rules without an extra DB hit on every guard check (services still load entities when needed for ownership checks).
@@ -256,6 +275,10 @@ See `docs/examples.graphql`.
 | `npm run prisma:generate` | Prisma client    |
 | `npm run prisma:migrate`  | Dev migrations   |
 | `npm run db:seed`       | Seed data          |
+
+Optional local API smoke suite:
+
+- `node scripts/run-api-tests.js`: runs an end-to-end GraphQL check against `http://localhost:3000/graphql` (requires the API to be running).
 
 ## Security notes
 
